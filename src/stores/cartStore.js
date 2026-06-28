@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useCartStore = defineStore('cart', {
+export const useCartStore = defineStore("cart", {
 
   state: () => ({
-
+    
     products: [
       {
         id: 1,
@@ -17,21 +17,42 @@ export const useCartStore = defineStore('cart', {
       },
       {
         id: 3,
-        name: "Keyboard",
-        price: 50
-      }
+        name: "Headphone",
+        price: 100
+      },
     ],
+
 
     cart: []
 
   }),
 
 
+  getters: {
+
+    totalItems: (state) => {
+      return state.cart.length;
+    },
+
+
+    totalPrice: (state) => {
+
+      return state.cart.reduce(
+        (total, item) => total + item.price,
+        0
+      );
+
+    }
+
+  },
+
+
   actions: {
+
 
     addToCart(product){
 
-      this.cart.push(product)
+      this.cart.push(product);
 
     },
 
@@ -40,38 +61,19 @@ export const useCartStore = defineStore('cart', {
 
       this.cart = this.cart.filter(
         item => item.id !== id
-      )
+      );
 
     },
 
 
     clearCart(){
 
-      this.cart = []
+      this.cart = [];
 
     }
 
-  },
-
-
-  getters: {
-
-    totalItems(state){
-
-      return state.cart.length
-
-    },
-
-
-    totalPrice(state){
-
-      return state.cart.reduce(
-        (total, item) => total + item.price,
-        0
-      )
-
-    }
 
   }
 
-})
+
+});
